@@ -378,7 +378,7 @@ tbody td {
 <div class="form-grid">
   <div class="form-field">
     <label>Nama Outlet<span class="required">*</span></label>
-    <input id="nama_obat">
+    <input id="nama_outlet">
   </div>
   <div class="form-field">
     <label>No ID Paket<span class="required">*</span></label>
@@ -597,7 +597,7 @@ function loadData() {
         tbody.innerHTML += `
         <tr>
           <td>${d["No"]}</td>
-          <td>${d["Nama Obat"]}</td>
+          <td>${d["Nama Outlet"]}</td>
           <td>${d["Online / Tidak"]}</td>
           <td>${d["No SPK"]}</td>
           <td>${d["No ID Paket"]}</td>
@@ -624,7 +624,7 @@ function filterTable() {
 
 function editData(d) {
   edit_row.value = d._row;
-  nama_obat.value = d["Nama Obat"];
+  nama_outlet.value = d["Nama Outlet"];
   online.value = d["Online / Tidak"];
   no_spk.value = d["No SPK"];
   no_id_paket.value = d["No ID Paket"];
@@ -636,7 +636,7 @@ function editData(d) {
 
 
 function simpan() {
-  if (!nama_obat.value || !online.value || !no_spk.value ||
+  if (!nama_outlet.value || !online.value || !no_spk.value ||
       !no_id_paket.value || !nominal.value ||
       !no_faktur.value || !pic_salesman.value) {
     swal("Peringatan", "Semua field wajib diisi", "warning");
@@ -648,7 +648,7 @@ function simpan() {
     fetch(API_URL + "?" + new URLSearchParams({
       action: "farma_update",
       row: edit_row.value,
-      nama_obat: nama_obat.value,
+      nama_outlet: nama_outlet.value,
       online: online.value,
       no_spk: no_spk.value,
       no_id_paket: no_id_paket.value,
@@ -665,7 +665,7 @@ function simpan() {
     fetch(API_URL, {
       method: "POST",
       body: JSON.stringify({
-        nama_obat: nama_obat.value,
+        nama_outlet: nama_outlet.value,
         online: online.value,
         no_spk: no_spk.value,
         no_id_paket: no_id_paket.value,
@@ -685,7 +685,7 @@ function simpan() {
 
 function resetForm() {
   edit_row.value = "";
-  nama_obat.value = "";
+  nama_outlet.value = "";
   online.value = "";
   no_spk.value = "";
   no_id_paket.value = "";
