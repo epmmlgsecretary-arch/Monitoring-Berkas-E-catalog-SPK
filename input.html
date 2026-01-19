@@ -740,6 +740,25 @@ function resetForm() {
 
 loadData();
 </script>
+<script>
+/* ===== PROTEKSI HALAMAN ===== */
+(function () {
+  const role = sessionStorage.getItem("role");
+  const pin  = sessionStorage.getItem("farma_pin");
+
+  if (!role || !pin) {
+    swal({
+      title: "Akses Ditolak",
+      text: "Silakan masukkan PIN terlebih dahulu",
+      icon: "warning",
+      button: "OK"
+    }).then(() => {
+      window.location.replace("pin-farma.html");
+    });
+  }
+})();
+</script>
+
 </body>
 </html>
 
