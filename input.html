@@ -624,7 +624,7 @@ if (!ROLE) {
 
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbxUCbDqE4KZdGJjcznqtsvSOGBOvQi6AeUvybNM3gyOoJCIx0n1XGVtYd0pp2mtHT8h/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbyVhyf0-f7sZnCOD9cSbwOVoLrOont8rUsqUetgVCFEd58aHnF6xwkjkyQk2D5gdrc/exec";
 
 const PIN = sessionStorage.getItem("farma_pin");
 
@@ -694,7 +694,8 @@ function editData(d) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-
+</script>
+<script>
 function simpan() {
   if (!nama_outlet.value || !online.value || !no_spk.value ||
       !no_id_paket.value || !nominal.value ||
@@ -703,8 +704,9 @@ function simpan() {
     return;
   }
 
-  // ================= UPDATE =================
+  /* ================= UPDATE (GET) ================= */
   if (edit_row.value && !isNaN(edit_row.value)) {
+
     fetch(API_URL + "?" + new URLSearchParams({
       action: "farma_update",
       pin: PIN,
@@ -726,11 +728,15 @@ function simpan() {
       swal("Berhasil", "Data diperbarui", "success");
       resetForm();
       loadData();
+    })
+    .catch(err => {
+      swal("Error", err.toString(), "error");
     });
 
-  // ================= ADD =================
+  /* ================= ADD (POST) ================= */
   } else {
-    fetch(API_URL + "?" + new URLSearchParams({
+
+    const params = new URLSearchParams({
       action: "farma_add",
       pin: PIN,
       nama_outlet: nama_outlet.value,
@@ -740,7 +746,12 @@ function simpan() {
       nominal: nominal.value,
       no_faktur: no_faktur.value,
       pic_salesman: pic_salesman.value
-    }))
+    });
+
+    fetch(API_URL, {
+      method: "POST",
+      body: params
+    })
     .then(r => r.json())
     .then(res => {
       if (res.error) {
@@ -750,9 +761,15 @@ function simpan() {
       swal("Berhasil", "Data disimpan", "success");
       resetForm();
       loadData();
+    })
+    .catch(err => {
+      swal("Error", err.toString(), "error");
     });
+
   }
 }
+
+
 
 /* ===== RESET FORM ===== */
 function resetForm() {
@@ -786,6 +803,4 @@ edit_row.value = "";   // 🔥 INI YANG DIPERBAIKI
 
 </body>
 </html>
-
-
 
