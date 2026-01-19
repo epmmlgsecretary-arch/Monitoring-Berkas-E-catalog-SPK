@@ -86,14 +86,6 @@ body {
 .form-field {
   max-width: 520px;
 }
-/* ===== DROPDOWN ICON (KHUSUS SELECT) ===== */
-.form-field select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 18px center;
-  background-size: 16px;
-  cursor: pointer;
-}
 
 label {
   font-size: 13px;
@@ -374,6 +366,22 @@ td:nth-child(10){ width: 130px; } /* Lokatore */
   width: 100%;
   height: 200px;
 }
+select {
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(0,0,0,0.6);
+  background: #d9f0d5;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 18px center;
+  background-size: 16px;
+}
+
 </style>
 
 
@@ -412,47 +420,43 @@ td:nth-child(10){ width: 130px; } /* Lokatore */
 
 <input type="hidden" id="edit_row">
 
- <div class="form-grid">
-    <div class="form-field">
-      <label>Nama Outlet<span class="required">*</span></label>
-      <input id="nama_outlet" placeholder="nama outlet">
-    </div>
-    <div class="form-field">
-      <label>No ID Paket<span class="required">*</span></label>
-      <input id="no_id_paket" placeholder="no id paket">
-    </div>
-
-    <div class="form-field">
+<div class="form-grid">
+  <div class="form-field">
+    <label>Nama Outlet<span class="required">*</span></label>
+    <input id="nama_outlet">
+  </div>
+  <div class="form-field">
+    <label>No ID Paket<span class="required">*</span></label>
+    <input id="no_id_paket">
+  </div>
+  <div class="form-field">
   <label>Status<span class="required">*</span></label>
-    <select id="online">
-      <option value="">-- Pilih Status --</option>
-      <option value="Online">Online</option>
-      <option value="Tidak Online">Tidak</option>
-    </select>
+  <select id="online">
+    <option value="">-- Pilih Status --</option>
+    <option value="Online">Online</option>
+    <option value="Tidak Online">Tidak Online</option>
+  </select>
+</div>
+  <div class="form-field">
+    <label>Nominal<span class="required">*</span></label>
+    <input id="nominal">
   </div>
-
-    <div class="form-field">
-      <label>Nominal<span class="required">*</span></label>
-      <input id="nominal" placeholder="nominal">
-    </div>
-
-    <div class="form-field">
-      <label>No SPK<span class="required">*</span></label>
-      <input id="no_spk" placeholder="no SPK">
-    </div>
-    <div class="form-field">
-      <label>No Faktur<span class="required">*</span></label>
-      <input id="no_faktur" placeholder="no faktur">
-    </div>
-
-   <div class="form-field">
-      <label>PIC Salesmen<span class="required">*</span></label>
-      <input id="pic_salesman" placeholder="pic salesman">
-    </div>
+  <div class="form-field">
+    <label>No SPK<span class="required">*</span></label>
+    <input id="no_spk">
   </div>
+  <div class="form-field">
+    <label>No Faktur<span class="required">*</span></label>
+    <input id="no_faktur">
+  </div>
+  <div class="form-field">
+    <label>PIC Salesmen<span class="required">*</span></label>
+    <input id="pic_salesman">
+  </div>
+</div>
 
 <div class="submit-wrap">
-  <button onclick="simpan()">Submit or Update</button>
+  <button type="button" onclick="simpan()">Submit or Update</button>
 </div>
 
 </div>
@@ -622,9 +626,8 @@ if (!ROLE) {
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbxUCbDqE4KZdGJjcznqtsvSOGBOvQi6AeUvybNM3gyOoJCIx0n1XGVtYd0pp2mtHT8h/exec";
 
-const PIN = sessionStorage.getItem("role") === "farma"
-  ? sessionStorage.getItem("farma_pin")
-  : null;
+const PIN = sessionStorage.getItem("farma_pin");
+
 
 function keluar() {
   sessionStorage.clear();
@@ -643,7 +646,10 @@ function loadData() {
       }
 
       tbody.innerHTML = "";
-      data.forEach(d => {
+
+      data.forEach((d, i) => {
+        d._row = i + 2; // 🔥 BARIS ASLI DI SPREADSHEET
+
         tbody.innerHTML += `
         <tr>
           <td>${d["No"]}</td>
@@ -654,8 +660,8 @@ function loadData() {
           <td>${d["Nominal"]}</td>
           <td>${d["No Faktur"]}</td>
           <td>${d["PIC Salesman"]}</td>
-          <td>${d["Keterangan"]}</td>
-          <td>${d["Locatore"]}</td>
+          <td>${d["Keterangan"] || ""}</td>
+          <td>${d["Locatore"] || ""}</td>
           <td class="actions">
             <button onclick='editData(${JSON.stringify(d)})'>Edit</button>
           </td>
@@ -663,6 +669,7 @@ function loadData() {
       });
     });
 }
+
 
 function filterTable() {
   const q = searchInput.value.toLowerCase();
@@ -673,15 +680,20 @@ function filterTable() {
 
 function editData(d) {
   edit_row.value = d._row;
-  nama_outlet.value = d["Nama Outlet"];
-  online.value = d["Online / Tidak"];
-  no_spk.value = d["No SPK"];
-  no_id_paket.value = d["No ID Paket"];
-  nominal.value = d["Nominal"];
-  no_faktur.value = d["No Faktur"];
-  pic_salesman.value = d["PIC Salesman"];
+
+  nama_outlet.value  = d["Nama Outlet"] || "";
+  no_spk.value       = d["No SPK"] || "";
+  no_id_paket.value  = d["No ID Paket"] || "";
+  nominal.value      = d["Nominal"] || "";
+  no_faktur.value    = d["No Faktur"] || "";
+  pic_salesman.value = d["PIC Salesman"] || "";
+
+  const status = d["Online / Tidak"] || "";
+  online.value = status === "Online" ? "Online" : "Tidak Online";
+
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
+
 
 function simpan() {
   if (!nama_outlet.value || !online.value || !no_spk.value ||
@@ -691,13 +703,11 @@ function simpan() {
     return;
   }
 
-  // =====================
-  // UPDATE
-  // =====================
-  if (edit_row.value) {
+  // ================= UPDATE =================
+  if (edit_row.value && !isNaN(edit_row.value)) {
     fetch(API_URL + "?" + new URLSearchParams({
       action: "farma_update",
-      pin: sessionStorage.getItem("farma_pin"), // 🔥 wajib
+      pin: PIN,
       row: edit_row.value,
       nama_outlet: nama_outlet.value,
       online: online.value,
@@ -718,14 +728,11 @@ function simpan() {
       loadData();
     });
 
-  }
-  // =====================
-  // ADD
-  // =====================
-  else {
+  // ================= ADD =================
+  } else {
     fetch(API_URL + "?" + new URLSearchParams({
       action: "farma_add",
-      pin: sessionStorage.getItem("farma_pin"),
+      pin: PIN,
       nama_outlet: nama_outlet.value,
       online: online.value,
       no_spk: no_spk.value,
@@ -747,15 +754,16 @@ function simpan() {
   }
 }
 
-
 /* ===== RESET FORM ===== */
 function resetForm() {
   edit_row.value = "";
   document.querySelectorAll(".form-grid input").forEach(i => i.value = "");
+  online.value = "";
 }
 
 /* ===== INIT ===== */
 loadData();
+edit_row.value = "";   // 🔥 INI YANG DIPERBAIKI
 </script>
 <script>
 /* ===== PROTEKSI HALAMAN ===== */
