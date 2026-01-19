@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+
+
+<title>ADMIN - Masukkan PIN</title>
+
+
+<style>
+* { box-sizing: border-box; }
+
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f4f6f8;
+}
+
+
+/* ===== NAVBAR ===== */
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 22px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  z-index: 10;
+}
+
+
+.navbar .brand {
+  font-weight: bold;
+  color: #1b5e20;
+}
+
+
+.navbar .menu a {
+  margin-left: 24px;
+  font-weight: 600;
+  color: #1b5e20;
+  text-decoration: none;
+}
+
+
+/* ===== HERO BACKGROUND ===== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  background: #d9f0d5;
+  padding-top: 160px;
+  overflow: hidden;
+  text-align: center;
+}
+
+
+.hero > * {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* ===== TITLE ===== */
+.hero h1 {
+  font-size: 42px;
+  font-weight: 900;
+  color: #6fbf2e;
+  margin-bottom: 40px;
+  letter-spacing: 2px;
+}
+
+
+/* ===== CARD ===== */
+.card {
+  margin: auto;
+  width: 100%;
+  max-width: 420px;
+  background: white;
+  padding: 40px 30px 45px;
+  border-radius: 18px;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+
+/* ===== ICON ===== */
+.icon {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  background: #1b5e20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 40px;
+}
+
+
+/* ===== CARD TEXT ===== */
+.card h2 {
+  margin: 0 0 12px;
+  color: #1b5e20;
+  letter-spacing: 1px;
+}
+
+
+.card p {
+  margin: 0 0 25px;
+  font-size: 14px;
+  color: #666;
+}
+
+
+/* ===== INPUT ===== */
+input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #9ccc65;
+  font-size: 15px;
+}
+input:focus {
+  outline: none;
+  border-color: #2e7d32;
+}
+
+
+/* ===== BUTTON ===== */
+button.login-btn {
+  width: 180px;              /* ⬅️ tidak full */
+  margin: 22px auto 0;       /* ⬅️ auto = center */
+  padding: 12px 0;
+  border-radius: 20px;
+  border: none;
+  background: #cfe7c6;
+  color: #1b5e20;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  display: block;
+}
+
+
+button.login-btn:hover {
+  background: #b9dcb0;
+}
+
+
+/* ===== BACK ===== */
+.back-btn {
+  position: absolute;
+  bottom: 18px;
+  left: 20px;
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  font-weight: bold;
+  color: #1b5e20;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+
+.back-btn:hover {
+  text-decoration: underline;
+}
+
+
+/* ===== ERROR ===== */
+.error {
+  margin-top: 15px;
+  color: #d32f2f;
+  font-size: 13px;
+  display: none;
+}
+
+
+/* ===== WAVE PUTIH BAWAH ===== */
+.hero svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 220px;
+  z-index: 1;
+}
+
+
+.logo img {
+  height: 60px;     /* ukuran ideal navbar */
+  width: auto;
+  display: block;
+}
+</style>
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="brand logo">
+  <img src="logo-enseval.png" alt="PT Enseval">
+</div>
+  <div class="menu">
+    <a href="pin-farma.html">ADMIN</a>
+    <a href="pin-approval.html">APPROVAL</a>
+  </div>
+</div>
+
+
+<!-- HERO -->
+<div class="hero">
+
+
+  <h1>ADMIN</h1>
+
+
+  <div class="card">
+<button class="back-btn" onclick="window.location.href='index.html'">
+      ← Kembali
+    </button>
+
+
+    <div class="icon">👤</div>
+
+
+    <h2>MASUKKAN PIN</h2>
+
+
+    <input
+      type="password"
+      id="pin"
+      placeholder="Masukkan PIN"
+      onkeydown="if(event.key==='Enter') masuk()"
+    >
+
+
+    <button class="login-btn" onclick="masuk()">MASUK</button>
+
+
+    <div id="error" class="error">PIN salah, , silakan coba lagi</div>
+  </div>
+
+
+  <!-- WAVE PUTIH -->
+  <svg viewBox="0 0 1440 200" preserveAspectRatio="none">
+    <path
+      fill="#f4f6f8"
+      d="
+        M0,40
+        C200,0 400,0 600,30
+        C800,60 1000,120 1200,90
+        C1350,70 1400,50 1440,40
+        L1440,200 L0,200 Z
+      "
+    />
+  </svg>
+
+
+</div>
+
+
+<!-- ⚠️ SCRIPT ASLI KAMU (TIDAK DIUBAH) -->
+<script>
+  const API_URL = "https://script.google.com/macros/s/AKfycbzFVqmjdJ8S16w34juIm2DswFWg4h1YgLDfzG-hT9-uzPGBGLVNh8UrKxX1BLr4qQi_aA/exec";
+ 
+ function masuk() {
+ const pin = document.getElementById("pin").value.trim();
+ const errorBox = document.getElementById("error");
+ 
+ if (!pin) {
+ errorBox.textContent = "PIN wajib diisi";
+ errorBox.style.display = "block";
+ return;
+ }
+ 
+ errorBox.style.display = "none";
+ 
+ fetch(API_URL + "?action=check_pin&pin=" + encodeURIComponent(pin))
+ .then(r => r.json())
+ .then(res => {
+ if (res.error || res.role !== "farma") {
+ errorBox.textContent = "PIN salah, silakan coba lagi";
+ errorBox.style.display = "block";
+ return;
+ }
+ 
+ // ✅ SESSION FARMA (TIDAK DIUBAH)
+ sessionStorage.setItem("role", "farma");
+ sessionStorage.setItem("farma_pin", pin);
+ 
+ window.location.href = "input.html";
+ })
+ .catch(() => {
+ errorBox.textContent = "Gagal menghubungi server";
+ errorBox.style.display = "block";
+ });
+ }
+</script>
+</body>
+</html>
+
