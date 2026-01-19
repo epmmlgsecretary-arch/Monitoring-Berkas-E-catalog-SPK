@@ -404,36 +404,44 @@ td:nth-child(10){ width: 130px; } /* Lokatore */
 
 <input type="hidden" id="edit_row">
 
-<div class="form-grid">
-  <div class="form-field">
-    <label>Nama Outlet<span class="required">*</span></label>
-    <input id="nama_outlet">
+ <div class="form-grid">
+    <div class="form-field">
+      <label>Nama Outlet<span class="required">*</span></label>
+      <input id="nama_outlet" placeholder="nama outlet">
+    </div>
+    <div class="form-field">
+      <label>No ID Paket<span class="required">*</span></label>
+      <input id="no_id_paket" placeholder="no id paket">
+    </div>
+
+    <div class="form-field">
+  <label>Status<span class="required">*</span></label>
+    <select id="online">
+      <option value="">-- Pilih Status --</option>
+      <option value="Online">Online</option>
+      <option value="Tidak Online">Tidak</option>
+    </select>
   </div>
-  <div class="form-field">
-    <label>No ID Paket<span class="required">*</span></label>
-    <input id="no_id_paket">
+
+    <div class="form-field">
+      <label>Nominal<span class="required">*</span></label>
+      <input id="nominal" placeholder="nominal">
+    </div>
+
+    <div class="form-field">
+      <label>No SPK<span class="required">*</span></label>
+      <input id="no_spk" placeholder="no SPK">
+    </div>
+    <div class="form-field">
+      <label>No Faktur<span class="required">*</span></label>
+      <input id="no_faktur" placeholder="no faktur">
+    </div>
+
+   <div class="form-field">
+      <label>PIC Salesmen<span class="required">*</span></label>
+      <input id="pic_salesman" placeholder="pic salesman">
+    </div>
   </div>
-  <div class="form-field">
-    <label>Status<span class="required">*</span></label>
-    <input id="online">
-  </div>
-  <div class="form-field">
-    <label>Nominal<span class="required">*</span></label>
-    <input id="nominal">
-  </div>
-  <div class="form-field">
-    <label>No SPK<span class="required">*</span></label>
-    <input id="no_spk">
-  </div>
-  <div class="form-field">
-    <label>No Faktur<span class="required">*</span></label>
-    <input id="no_faktur">
-  </div>
-  <div class="form-field">
-    <label>PIC Salesmen<span class="required">*</span></label>
-    <input id="pic_salesman">
-  </div>
-</div>
 
 <div class="submit-wrap">
   <button onclick="simpan()">Submit or Update</button>
