@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+<b!DOCTYPE html>
 <html lang="id">
 <head>
-<meta hcharset="UTF-8">
+<meta charset="UTF-8">
 <title>ADMIN - FARMA</title>
 
 
@@ -572,14 +572,25 @@ tbody tr:last-child td {
 
 <!-- ===== JS ASLI (TIDAK DIUBAH) ===== -->
 <script>
-if (sessionStorage.getItem("role") !== "farma") {
-  alert("Akses ditolak.");
+const role = sessionStorage.getItem("role");
+if (!role) {
   window.location.replace("pin-farma.html");
 }
-</script>
 
 
-<script>
+/* ===== DOM SAFE (WAJIB DI HOSTING) ===== */
+const tbody = document.getElementById("tbody");
+const searchInput = document.getElementById("searchInput");
+const edit_row = document.getElementById("edit_row");
+const nama_outlet = document.getElementById("nama_outlet");
+const online = document.getElementById("online");
+const no_spk = document.getElementById("no_spk");
+const no_id_paket = document.getElementById("no_id_paket");
+const nominal = document.getElementById("nominal");
+const no_faktur = document.getElementById("no_faktur");
+const pic_salesman = document.getElementById("pic_salesman");
+
+
 const API_URL = "https://script.google.com/macros/s/AKfycbx3L1LS2ygzH5k8821ziUOsMggLHgPPBcaq0W4kbyYjJliPS97XpABnhIeQ9pgr_I2n/exec";
 
 
@@ -589,10 +600,9 @@ function keluar() {
 }
 
 
-/* ===== LOGIKA ASLI ===== */
 function loadData() {
   fetch(API_URL + "?action=farma_list")
-    .then(r => r.json())
+    .then(res => res.json())
     .then(data => {
       tbody.innerHTML = "";
       data.forEach(d => {
@@ -607,9 +617,7 @@ function loadData() {
           <td>${d["No Faktur"]}</td>
           <td>${d["PIC Salesman"]}</td>
           <td>${d["Keterangan"]}</td>
-          <td class="actions">
-            <button onclick='editData(${JSON.stringify(d)})'>Edit</button>
-          </td>
+          <td class="actions"><button onclick='editData(${JSON.stringify(d)})'>Edit</button></td>
         </tr>`;
       });
     });
@@ -638,56 +646,28 @@ function editData(d) {
 
 
 function simpan() {
-  if (!nama_outlet.value || !online.value || !no_spk.value ||
-      !no_id_paket.value || !nominal.value ||
-      !no_faktur.value || !pic_salesman.value) {
+  if (!nama_outlet.value || !online.value) {
     swal("Peringatan", "Semua field wajib diisi", "warning");
     return;
   }
 
 
-  if (edit_row.value) {
-    fetch(API_URL + "?" + new URLSearchParams({
-      action: "farma_update",
-      row: edit_row.value,
-      nama_outlet: nama_outlet.value,
-      online: online.value,
-      no_spk: no_spk.value,
-      no_id_paket: no_id_paket.value,
-      nominal: nominal.value,
-      no_faktur: no_faktur.value,
-      pic_salesman: pic_salesman.value
-    }))
-    .then(() => {
-      swal("Berhasil", "Data diperbarui", "success");
-      resetForm();
-      loadData();
-    });
-  } else {
-    fetch(API_URL, {
-      method: "POST",
-      body: JSON.stringify({
-        nama_outlet: nama_outlet.value,
-        online: online.value,
-        no_spk: no_spk.value,
-        no_id_paket: no_id_paket.value,
-        nominal: nominal.value,
-        no_faktur: no_faktur.value,
-        pic_salesman: pic_salesman.value
-      })
-    })
+  const payload = {
+    nama_outlet: nama_outlet.value,
+    online: online.value,
+    no_spk: no_spk.value,
+    no_id_paket: no_id_paket.value,
+    nominal: nominal.value,
+    no_faktur: no_faktur.value,
+    pic_salesman: pic_salesman.value
+  };
+
+
+  fetch(API_URL, { method: "POST", body: JSON.stringify(payload) })
     .then(() => {
       swal("Berhasil", "Data disimpan", "success");
-      resetForm();
       loadData();
     });
-  }
-}
-
-
-function resetForm() {
-  edit_row.value = "";
-  document.querySelectorAll("input").forEach(i => i.value = "");
 }
 
 
