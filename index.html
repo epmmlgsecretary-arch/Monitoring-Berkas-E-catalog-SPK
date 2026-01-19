@@ -178,23 +178,6 @@ th {
 td {
   vertical-align: top;
 }
-/* ===== TABLE HEADER ICON ===== */
-.th-icon {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-right: 6px;
-  vertical-align: middle;
-}
-
-
-.th-icon svg {
-  width: 14px;
-  height: 14px;
-  stroke: #000;
-  fill: none;
-  stroke-width: 2;
-}
 
 
 /* ===== INFO TEXT ===== */
@@ -320,100 +303,20 @@ td {
   <div class="table-wrapper">
     <table>
       <thead>
-  <tr>
-    <th>No</th>
-
-
-    <th>
-      <span class="th-icon">
-        <!-- user -->
-        <svg viewBox="0 0 24 24">
-          <circle cx="12" cy="8" r="4"/>
-          <path d="M4 20c2-4 14-4 16 0"/>
-        </svg>
-      </span>
-      Nama Outlet
-    </th>
-
-
-    <th>
-      <span class="th-icon">
-        <!-- list -->
-        <svg viewBox="0 0 24 24">
-          <line x1="8" y1="6" x2="21" y2="6"/>
-          <line x1="8" y1="12" x2="21" y2="12"/>
-          <line x1="8" y1="18" x2="21" y2="18"/>
-          <circle cx="4" cy="6" r="1"/>
-          <circle cx="4" cy="12" r="1"/>
-          <circle cx="4" cy="18" r="1"/>
-        </svg>
-      </span>
-      Online
-    </th>
-
-
-    <th>
-      <span class="th-icon">#</span>
-      No SPK
-    </th>
-
-
-    <th>
-      <span class="th-icon">#</span>
-      No ID Paket
-    </th>
-
-
-    <th>
-      <span class="th-icon">#</span>
-      Nominal
-    </th>
-
-
-    <th>
-      <span class="th-icon">#</span>
-      No Faktur
-    </th>
-
-
-    <th>
-      <span class="th-icon">
-        <!-- user -->
-        <svg viewBox="0 0 24 24">
-          <circle cx="12" cy="8" r="4"/>
-          <path d="M4 20c2-4 14-4 16 0"/>
-        </svg>
-      </span>
-      PIC
-    </th>
-
-
-    <th>
-      <span class="th-icon">
-        <!-- info -->
-        <svg viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="9"/>
-          <line x1="12" y1="10" x2="12" y2="16"/>
-          <circle cx="12" cy="7" r="1"/>
-        </svg>
-      </span>
-      Status
-    </th>
-
-
-    <th>
-      <span class="th-icon">
-        <!-- edit -->
-        <svg viewBox="0 0 24 24">
-          <path d="M4 20h4l10-10-4-4L4 16v4z"/>
-        </svg>
-      </span>
-      Aksi
-    </th>
-  </tr>
-</thead>
-
-
+        <tr>
+          <th>No</th>
+          <th>Tanggal</th>
+          <th>Nama Outlet</th>
+          <th>Online</th>
+          <th>No SPK</th>
+          <th>No Paket</th>
+          <th>Nominal</th>
+          <th>No Faktur</th>
+          <th>PIC</th>
+          <th>Status</th>
+          <th>Locatore</th>
+        </tr>
+      </thead>
       <tbody id="tbody">
         <tr>
           <td colspan="11" class="info-text">
@@ -460,7 +363,7 @@ function cari() {
         <tr>
           <td>${d["No"]}</td>
           <td>${d["Tanggal"]}</td>
-          <td>${d["Nama Obat"]}</td>
+          <td>${d["Nama Outlet"]}</td>
           <td>${d["Online / Tidak"]}</td>
           <td>${d["No SPK"]}</td>
           <td>${d["No ID Paket"]}</td>
