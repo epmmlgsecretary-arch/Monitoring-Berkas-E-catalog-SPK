@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Monitoring Berkas E-Catalog & SPK PHM</title>
+
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f4f6f8;
+  color: #333;
+}
+
+
+/* ===== TOPBAR ===== */
+.topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: transparent;
+  padding: 20px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+
+.topbar strong {
+  color: #1b5e20;
+  font-size: 16px;
+}
+
+
+.topbar .menu a {
+  margin-left: 24px;
+  font-weight: 600;
+  color: #1b5e20;
+  text-decoration: none;
+}
+
+
+.topbar .menu a:hover {
+  text-decoration: underline;
+}
+
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 520px;
+  padding: 160px 20px 220px;
+  text-align: center;
+  background: #d9f0d5; /* hijau full */
+  position: relative;
+  overflow: hidden;
+}
+
+
+.hero h1 {
+  font-size: 44px;
+  font-weight: 900;
+  color: #6fbf2e;
+  margin-bottom: 48px;
+  line-height: 1.2;
+  letter-spacing: 1px;
+}
+
+
+.hero-title {
+  margin-bottom: 48px;
+}
+
+
+.title-main {
+  display: block;
+  font-size: 48px;
+  font-weight: 900;
+  color: #6fbf2e;
+  letter-spacing: 2px;
+}
+
+
+.title-sub {
+  display: block;
+  margin-top: 12px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #6fbf2e;
+  letter-spacing: 1px;
+}
+
+
+/* ===== SEARCH ===== */
+.search-box {
+  max-width: 900px;
+  margin: auto;
+  position: relative;
+}
+
+
+.search-box input {
+  width: 100%;
+  padding: 26px 28px 26px 68px;
+  font-size: 16px;
+  border-radius: 18px; /* LEBIH KOTAK */
+  border: 2px solid #2957e0;
+  background: #e3f2da
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='7.5'/%3E%3Cline x1='21' y1='21' x2='16.8' y2='16.8'/%3E%3C/svg%3E")
+    no-repeat 30px center;
+  outline: none;
+  color: #374151;
+}
+
+
+.search-box input::placeholder {
+  color: #6b7280;
+}
+
+
+.search-box button {
+  display: none;
+}
+
+
+.search-box button:hover {
+  background: #134018;
+}
+
+
+/* ===== CONTAINER ===== */
+.container {
+  max-width: 1200px;
+  margin: -110px auto 70px;
+  background: white;
+  padding: 28px;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  position: relative;
+  z-index: 8;
+}
+
+
+/* ===== TABLE ===== */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px 12px;
+  white-space: nowrap;
+}
+
+
+th {
+  background: #f2f2f2;
+  text-align: center;
+  font-weight: 600;
+}
+
+
+td {
+  vertical-align: top;
+}
+/* ===== TABLE HEADER ICON ===== */
+.th-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+
+.th-icon svg {
+  width: 14px;
+  height: 14px;
+  stroke: #000;
+  fill: none;
+  stroke-width: 2;
+}
+
+
+/* ===== INFO TEXT ===== */
+.info-text {
+  text-align: center;
+  color: #777;
+  padding: 24px;
+}
+
+
+.loading {
+  text-align: center;
+  font-style: italic;
+}
+
+
+.logo img {
+  height: 60px;   /* sebelumnya 36px → ini ukuran ideal */
+  width: auto;
+  display: block;
+}
+
+
+/* Pastikan konten hero selalu di atas wave */
+.hero > * {
+  position: relative;
+  z-index: 2;
+}
+</style>
+</head>
+
+
+<body>
+
+
+<!-- ===== TOPBAR ===== -->
+<div class="topbar">
+  <div class="logo">
+    <img src="logo-enseval.png" alt="PT Enseval">
+  </div>
+  <div class="menu">
+    <a href="pin-farma.html">ADMIN</a>
+    <a href="pin-approval.html">APPROVAL</a>
+  </div>
+</div>
+
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <h1 class="hero-title">
+  <span class="title-main">MONITORING</span>
+  <span class="title-sub">BERKAS E-CATALOG & SPK PHM</span>
+</h1>
+
+
+<!-- SVG WAVE -->
+  <!-- SVG WAVE ATAS -->
+<svg
+  viewBox="0 0 1440 160"
+  preserveAspectRatio="none"
+  style="
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 160px;
+    display: block;
+    z-index: 1;
+  "
+>
+  <path
+    fill="#f4f6f8"
+    d="
+      M0,0
+      C160,60 360,100 560,90
+      C760,80 900,40 1120,50
+      C1280,60 1360,80 1440,70
+      L1440,0 L0,0 Z
+    "
+  />
+</svg>
+
+
+  <div class="search-box">
+    <input
+      id="keyword"
+      placeholder="Cari nama obat / SPK / faktur"
+      onkeydown="if(event.key==='Enter') cari()"
+    >
+    <button onclick="cari()">Search</button>
+  </div>
+
+
+  <!-- WAVE PUTIH PEMOTONG HIJAU -->
+  <svg
+    viewBox="0 0 1440 200"
+    preserveAspectRatio="none"
+    style="
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 200px;
+      z-index: 1;
+    "
+  >
+    <path
+      fill="#f4f6f8"
+      d="
+        M0,40
+        C200,0 380,0 600,20
+        C820,40 1000,100 1200,80
+        C1350,60 1400,40 1440,30
+        L1440,200 L0,200 Z
+      "
+    />
+  </svg>
+</div>
+
+
+<!-- ===== TABLE ===== -->
+<div class="container">
+  <div class="table-wrapper">
+    <table>
+      <thead>
+  <tr>
+    <th>No</th>
+
+
+    <th>
+      <span class="th-icon">
+        <!-- user -->
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M4 20c2-4 14-4 16 0"/>
+        </svg>
+      </span>
+      Nama Outlet
+    </th>
+
+
+    <th>
+      <span class="th-icon">
+        <!-- list -->
+        <svg viewBox="0 0 24 24">
+          <line x1="8" y1="6" x2="21" y2="6"/>
+          <line x1="8" y1="12" x2="21" y2="12"/>
+          <line x1="8" y1="18" x2="21" y2="18"/>
+          <circle cx="4" cy="6" r="1"/>
+          <circle cx="4" cy="12" r="1"/>
+          <circle cx="4" cy="18" r="1"/>
+        </svg>
+      </span>
+      Online
+    </th>
+
+
+    <th>
+      <span class="th-icon">#</span>
+      No SPK
+    </th>
+
+
+    <th>
+      <span class="th-icon">#</span>
+      No ID Paket
+    </th>
+
+
+    <th>
+      <span class="th-icon">#</span>
+      Nominal
+    </th>
+
+
+    <th>
+      <span class="th-icon">#</span>
+      No Faktur
+    </th>
+
+
+    <th>
+      <span class="th-icon">
+        <!-- user -->
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M4 20c2-4 14-4 16 0"/>
+        </svg>
+      </span>
+      PIC
+    </th>
+
+
+    <th>
+      <span class="th-icon">
+        <!-- info -->
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9"/>
+          <line x1="12" y1="10" x2="12" y2="16"/>
+          <circle cx="12" cy="7" r="1"/>
+        </svg>
+      </span>
+      Status
+    </th>
+
+
+    <th>
+      <span class="th-icon">
+        <!-- edit -->
+        <svg viewBox="0 0 24 24">
+          <path d="M4 20h4l10-10-4-4L4 16v4z"/>
+        </svg>
+      </span>
+      Aksi
+    </th>
+  </tr>
+</thead>
+
+
+      <tbody id="tbody">
+        <tr>
+          <td colspan="11" class="info-text">
+            Silakan lakukan pencarian untuk melihat data
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbw4fpRANatIVTKXHTSLi1bBbi6xpebTDl8XI7vZQahAuvrdsRvcoeaZSegDfyML4IEdLA/exec";
+
+
+function cari() {
+  const q = keyword.value.trim();
+
+
+  if (!q) {
+    tbody.innerHTML = `<tr><td colspan="11" class="info-text">Masukkan kata kunci pencarian</td></tr>`;
+    return;
+  }
+
+
+  tbody.innerHTML = `<tr><td colspan="11" class="loading">Mengambil data...</td></tr>`;
+
+
+  fetch(API_URL + "?action=search&keyword=" + encodeURIComponent(q))
+    .then(r => r.json())
+    .then(data => {
+      tbody.innerHTML = "";
+
+
+      if (!data.length) {
+        tbody.innerHTML = `<tr><td colspan="11" class="info-text">Data tidak ditemukan</td></tr>`;
+        return;
+      }
+
+
+      data.forEach(d => {
+        tbody.innerHTML += `
+        <tr>
+          <td>${d["No"]}</td>
+          <td>${d["Tanggal"]}</td>
+          <td>${d["Nama Obat"]}</td>
+          <td>${d["Online / Tidak"]}</td>
+          <td>${d["No SPK"]}</td>
+          <td>${d["No ID Paket"]}</td>
+          <td>${d["Nominal"]}</td>
+          <td>${d["No Faktur"]}</td>
+          <td>${d["PIC Salesman"]}</td>
+          <td>${d["Keterangan"]}</td>
+          <td>${d["Locatore"] || "-"}</td>
+        </tr>`;
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      tbody.innerHTML = `<tr><td colspan="11" class="info-text">Gagal mengambil data</td></tr>`;
+    });
+}
+</script>
+
+
+</body>
+</html>
+
