@@ -528,6 +528,28 @@ function logout() {
   window.location.href = "pin-approval.html";
 }
 </script>
+<script>
+function filterTable() {
+  const keyword = document.getElementById("searchInput").value.toLowerCase();
+  const rows = document.querySelectorAll("#body tr");
+
+  rows.forEach(row => {
+    const namaOutlet = row.cells[2]?.innerText.toLowerCase() || "";
+    const noSPK = row.cells[4]?.innerText.toLowerCase() || "";
+    const noFaktur = row.cells[7]?.innerText.toLowerCase() || "";
+
+    if (
+      namaOutlet.includes(keyword) ||
+      noSPK.includes(keyword) ||
+      noFaktur.includes(keyword)
+    ) {
+      row.style.display = "";
+    } else {
+      row.style.display = "none";
+    }
+  });
+}
+</script>
 
 
 </body>
