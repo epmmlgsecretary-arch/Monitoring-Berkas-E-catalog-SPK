@@ -151,6 +151,8 @@ body {
 /* ===== TABLE ===== */
 .table-wrapper {
   overflow-x: auto;
+  max-height: 420px;   /* 🔥 tinggi tabel */
+  overflow-y: auto;    /* 🔥 scroll ke bawah */
 }
 
 
@@ -177,6 +179,12 @@ th {
 
 td {
   vertical-align: top;
+}
+thead th {
+  position: sticky;
+  top: 0;
+  background: #f2f2f2;
+  z-index: 2;
 }
 
 
@@ -332,7 +340,41 @@ td {
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbyVhyf0-f7sZnCOD9cSbwOVoLrOont8rUsqUetgVCFEd58aHnF6xwkjkyQk2D5gdrc/exec";
 
+console.log("Total data:", data.length);
+function loadAll() {
+  tbody.innerHTML = `<tr><td colspan="11" class="loading">Memuat data...</td></tr>`;
 
+  fetch(API_URL + "?action=farma_list&pin=1234")
+    .then(r => r.json())
+    .then(data => {
+      tbody.innerHTML = "";
+
+      if (!data.length) {
+        tbody.innerHTML = `<tr><td colspan="11" class="info-text">Belum ada data</td></tr>`;
+        return;
+      }
+
+      data.forEach(d => {
+        tbody.innerHTML += `
+        <tr>
+          <td>${d["No"]}</td>
+          <td>${d["Tanggal"]}</td>
+          <td>${d["Nama Outlet"]}</td>
+          <td>${d["Online / Tidak"]}</td>
+          <td>${d["No SPK"]}</td>
+          <td>${d["No ID Paket"]}</td>
+          <td>${new Intl.NumberFormat("id-ID").format(d["Nominal"])}</td>
+          <td>${d["No Faktur"]}</td>
+          <td>${d["PIC Salesman"]}</td>
+          <td>${d["Keterangan"]}</td>
+          <td>${d["Locatore"] || "-"}</td>
+        </tr>`;
+      });
+    })
+    .catch(() => {
+      tbody.innerHTML = `<tr><td colspan="11" class="info-text">Gagal memuat data</td></tr>`;
+    });
+}
 function cari() {
   const q = keyword.value.trim();
 
@@ -382,6 +424,9 @@ function cari() {
 }
 </script>
 
+<script>
+loadAll();
+</script>
 
 </body>
 </html>
