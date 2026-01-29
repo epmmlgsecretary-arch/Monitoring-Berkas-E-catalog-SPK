@@ -383,8 +383,6 @@ select {
 }
 
 </style>
-
-
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
@@ -439,7 +437,7 @@ select {
 </div>
   <div class="form-field">
     <label>Nominal<span class="required">*</span></label>
-    <input id="nominal">
+    <input id="nominal" oninput="formatNominal(this)">
   </div>
   <div class="form-field">
     <label>No SPK<span class="required">*</span></label>
@@ -624,7 +622,7 @@ if (!ROLE) {
 
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbyVhyf0-f7sZnCOD9cSbwOVoLrOont8rUsqUetgVCFEd58aHnF6xwkjkyQk2D5gdrc/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbyar8ZWofKd5g89-0fEBA6oSYCZbjxZgj1ZLsm-vaXFygmXwpArZlKAj6zTAKs8j-MJ/exec";
 
 const PIN = sessionStorage.getItem("farma_pin");
 
@@ -684,7 +682,9 @@ function editData(d) {
   nama_outlet.value  = d["Nama Outlet"] || "";
   no_spk.value       = d["No SPK"] || "";
   no_id_paket.value  = d["No ID Paket"] || "";
-  nominal.value      = d["Nominal"] || "";
+  nominal.value = d["Nominal"]
+  ? new Intl.NumberFormat("id-ID").format(d["Nominal"])
+  : "";
   no_faktur.value    = d["No Faktur"] || "";
   pic_salesman.value = d["PIC Salesman"] || "";
 
@@ -715,7 +715,7 @@ function simpan() {
       online: online.value,
       no_spk: no_spk.value,
       no_id_paket: no_id_paket.value,
-      nominal: nominal.value,
+      nominal: nominal.value.replace(/\./g, ""),
       no_faktur: no_faktur.value,
       pic_salesman: pic_salesman.value
     }))
@@ -743,7 +743,7 @@ function simpan() {
       online: online.value,
       no_spk: no_spk.value,
       no_id_paket: no_id_paket.value,
-      nominal: nominal.value,
+      nominal: nominal.value.replace(/\./g, ""),
       no_faktur: no_faktur.value,
       pic_salesman: pic_salesman.value
     });
@@ -782,6 +782,16 @@ function resetForm() {
 loadData();
 edit_row.value = "";   // 🔥 INI YANG DIPERBAIKI
 </script>
+
+<script>
+function formatNominal(el) {
+  let angka = el.value.replace(/\D/g, "");
+  el.value = angka
+    ? new Intl.NumberFormat("id-ID").format(angka)
+    : "";
+}
+</script>
+
 <script>
 /* ===== PROTEKSI HALAMAN ===== */
 (function () {
@@ -803,4 +813,3 @@ edit_row.value = "";   // 🔥 INI YANG DIPERBAIKI
 
 </body>
 </html>
-
