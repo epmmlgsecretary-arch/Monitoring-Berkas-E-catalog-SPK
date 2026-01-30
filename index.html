@@ -358,7 +358,7 @@ function loadAll() {
         tbody.innerHTML += `
         <tr>
           <td>${d["No"]}</td>
-          <td>${d["Tanggal"]}</td>
+          <td>${formatTanggal(d["Tanggal"])}</td>
           <td>${d["Nama Outlet"]}</td>
           <td>${d["Online / Tidak"]}</td>
           <td>${d["No SPK"]}</td>
@@ -404,7 +404,7 @@ function cari() {
         tbody.innerHTML += `
         <tr>
           <td>${d["No"]}</td>
-          <td>${d["Tanggal"]}</td>
+          <td>${formatTanggal(d["Tanggal"])}</td>
           <td>${d["Nama Outlet"]}</td>
           <td>${d["Online / Tidak"]}</td>
           <td>${d["No SPK"]}</td>
@@ -421,6 +421,20 @@ function cari() {
       console.error(err);
       tbody.innerHTML = `<tr><td colspan="11" class="info-text">Gagal mengambil data</td></tr>`;
     });
+}
+</script>
+<script>
+function formatTanggal(value) {
+  if (!value) return "-";
+
+  const d = new Date(value);
+  if (isNaN(d)) return value; // kalau bukan date, tampilkan apa adanya
+
+  const day = String(d.getDate()).padStart(2, "0");
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const year = d.getFullYear();
+
+  return `${day}-${month}-${year}`;
 }
 </script>
 
