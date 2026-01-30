@@ -202,7 +202,6 @@ th, td {
   text-align: center;
 }
 
-
 th {
   background: #f1f1f1;
   position: sticky;
@@ -473,6 +472,14 @@ if (!PIN) {
   window.location.href = "pin-approval.html";
 }
 
+function formatTanggal(value) {
+  if (!value) return "-";
+
+  const d = new Date(value);
+  if (isNaN(d)) return value;
+
+  return `${String(d.getDate()).padStart(2,"0")}-${String(d.getMonth()+1).padStart(2,"0")}-${d.getFullYear()}`;
+}
 
 window.onload = loadData;
 
@@ -491,7 +498,7 @@ function render(data) {
     body.innerHTML += `
       <tr>
         <td>${r["No"]}</td>
-        <td>${r["Tanggal"]}</td>
+        <td>${formatTanggal(r["Tanggal"])}</td>
         <td>${r["Nama Outlet"]}</td>
         <td>${r["Online / Tidak"]}</td>
         <td>${r["No SPK"]}</td>
