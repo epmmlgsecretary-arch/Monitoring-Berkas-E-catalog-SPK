@@ -510,7 +510,6 @@ function render(data) {
           <select id="ket_${r._row}">
             <option ${r["Keterangan"]=="PENDING"?"selected":""}>PENDING</option>
             <option ${r["Keterangan"]=="DONE"?"selected":""}>DONE</option>
-            <option ${r["Keterangan"]=="REJECT"?"selected":""}>REJECT</option>
           </select>
         </td>
         <td><input type="text" id="loc_${r._row}" value="${r["Locatore"]||""}"></td>
