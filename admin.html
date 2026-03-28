@@ -379,7 +379,7 @@ select, input[type="text"] {
           <circle cx="4" cy="12" r="1"/>
           <circle cx="4" cy="18" r="1"/>
         </svg>
-        Online
+        Online/Offline
       </span>
     </th>
 
@@ -523,7 +523,7 @@ function render(data) {
 function update(row) {
   const ket = document.getElementById("ket_" + row).value;
   const loc = document.getElementById("loc_" + row).value;
-  fetch(API_URL + "?action=admin_update&pin=" + PIN + "&row=" + row + "&keterangan=" + ket + "&locstore=" + loc)
+  fetch(API_URL + "?action=admin_update&pin=" + PIN + "&row=" + row + "&keterangan=" + ket + "&locatore=" + loc)
     .then(() => alert("Data diperbarui"));
 }
 
